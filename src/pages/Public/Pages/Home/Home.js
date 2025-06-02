@@ -64,7 +64,7 @@ const Home = () => {
   return (
     <>
       <Content>
-        <Box mt={isMobile ? 8 : 3}>
+        <Box mt={isMobile ? 12 : 3}>
           <LogoImage
             src={Logo}
             alt="Logo"

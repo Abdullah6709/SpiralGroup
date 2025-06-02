@@ -9,14 +9,6 @@ import {
   Box,
   Paper,
   useMediaQuery,
-  Drawer,
-  IconButton,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Divider,
-  Collapse,
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { Link, useLocation } from "react-router-dom";
@@ -28,9 +20,6 @@ import {
   AccountTree as AccountTreeIcon,
   Home as HomeIcon,
   Business as BusinessIcon,
-  Menu as MenuIcon,
-  ExpandLess,
-  ExpandMore,
 } from "@mui/icons-material";
 import { keyframes } from "@emotion/react";
 import HomeAppBar from "./HomeAppBar";
@@ -50,7 +39,7 @@ const sections = [
   },
   {
     path: "/ittech",
-    label: "Group of Company",
+    label: "Group of\nCompany",
     icon: <AccountTreeIcon sx={{ fontSize: "30px" }} />,
     color: "#b71c1c",
     children: [
@@ -102,32 +91,11 @@ const slideDown = keyframes`
 const PublicAppBar = () => {
   const { pathname } = useLocation();
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
+  const isMobile = useMediaQuery(theme.breakpoints.down("lg")); // true for xs and sm
   const [hoveredMenu, setHoveredMenu] = useState(null);
-  const [drawerOpen, setDrawerOpen] = useState(false);
-  const [expandedMenu, setExpandedMenu] = useState(null);
 
-  const appBarBackgroundColor =
-    pathname === "/" ? "transparent" : "#transparent";
+  const appBarBackgroundColor = pathname === "/" ? "transparent" : "#transparent";
   const appBarPosition = pathname === "/" ? "fixed" : "absolute";
-
-  const toggleDrawer = (open) => (event) => {
-    if (
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
-    ) {
-      return;
-    }
-    setDrawerOpen(open);
-  };
-
-  const handleMenuClick = (index) => {
-    if (expandedMenu === index) {
-      setExpandedMenu(null);
-    } else {
-      setExpandedMenu(index);
-    }
-  };
 
   return (
     <>
@@ -158,25 +126,12 @@ const PublicAppBar = () => {
             {!isMobile && (
               <Grid item xs={10}>
                 <Stack
-                  sx={{
-                    mt: 2,
-                    position: "relative",
-                    // Responsive adjustments
-                    gap: { lg: theme.spacing(7), xl: theme.spacing(7) }, // Default for large screens
-                    mr: { lg: 25, xl: 25 }, // Default for large screens
-                    // Adjustments for 1024px specifically
-                    [theme.breakpoints.between(1024, 1200)]: {
-                      gap: theme.spacing(5), // Smaller gap at 1024px
-                      mr: 15, // Smaller margin at 1024px
-                    },
-                    // Adjustments for screens below 1024px
-                    [theme.breakpoints.down(1024)]: {
-                      gap: theme.spacing(3), // Even smaller gap
-                      mr: 0, // No margin
-                    },
-                  }}
+                  sx={{ mt: 2, position: "relative" }}
                   direction="row"
+                  gap={theme.spacing(7)}
                   justifyContent="center"
+              
+                  
                 >
                   {sections.map(
                     ({ path, label, icon, color, children }, index) => (
@@ -218,205 +173,178 @@ const PublicAppBar = () => {
                           </Typography>
                         </Stack>
 
-                        {Array.isArray(children) && hoveredMenu === index && (
-                          <Paper
-                            elevation={3}
-                            sx={{
-                              position: "absolute",
-                              top: "100%",
-                              left: "50%",
-                              transform: "translateX(-50%)",
-                              mt: 1,
-                              px: 2,
-                              py: 1,
-                              zIndex: 10,
-                              minWidth: "180px",
-                              backgroundColor: "#fff",
-                            }}
-                          >
-                            <Stack spacing={1}>
-                              {children.map(
-                                ({
-                                  path: childPath,
-                                  label: childLabel,
-                                  icon: childIcon,
-                                  color: childColor,
-                                }) => (
-                                  <Stack
-                                    key={childPath}
-                                    direction="row"
-                                    spacing={1}
-                                    alignItems="center"
-                                    component={Link}
-                                    to={childPath}
-                                    sx={{
-                                      textDecoration: "none",
-                                      color: "black",
-                                      px: 1,
-                                      py: 0.5,
-                                      borderRadius: 1,
-                                      "&:hover": {
-                                        backgroundColor: "red",
-                                      },
-                                    }}
-                                  >
-                                    <Avatar
+                        {Array.isArray(children) &&
+                          hoveredMenu === index && (
+                            <Paper
+                              elevation={3}
+                              sx={{
+                                position: "absolute",
+                                top: "100%",
+                                left: "50%",
+                                transform: "translateX(-50%)",
+                                mt: 1,
+                                px: 2,
+                                py: 1,
+                                zIndex: 10,
+                                minWidth: "180px",
+                                backgroundColor: "#fff",
+                              }}
+                            >
+                              <Stack spacing={1}>
+                                {children.map(
+                                  ({ path: childPath, label: childLabel, icon: childIcon, color: childColor }) => (
+                                    <Stack
+                                      key={childPath}
+                                      direction="row"
+                                      spacing={1}
+                                      alignItems="center"
+                                      component={Link}
+                                      to={childPath}
                                       sx={{
-                                        width: 24,
-                                        height: 24,
-                                        backgroundColor: childColor,
+                                        textDecoration: "none",
+                                        color: "black",
+                                        px: 1,
+                                        py: 0.5,
+                                        borderRadius: 1,
+                                        "&:hover": {
+                                          backgroundColor: "red",
+                                        },
                                       }}
                                     >
-                                      {childIcon}
-                                    </Avatar>
-                                    <Typography variant="body2">
-                                      {childLabel}
-                                    </Typography>
-                                  </Stack>
-                                )
-                              )}
-                            </Stack>
-                          </Paper>
-                        )}
+                                      <Avatar
+                                        sx={{
+                                          width: 24,
+                                          height: 24,
+                                          backgroundColor: childColor,
+                                        }}
+                                      >
+                                        {childIcon}
+                                      </Avatar>
+                                      <Typography variant="body2">
+                                        {childLabel}
+                                      </Typography>
+                                    </Stack>
+                                  )
+                                )}
+                              </Stack>
+                            </Paper>
+                          )}
                       </Box>
                     )
                   )}
                 </Stack>
               </Grid>
             )}
-
-            {/* Mobile Menu Button - Only for xs and sm screens */}
-            {isMobile && (
-              <Grid
-                item
-                xs={10}
-                sx={{ display: "flex", justifyContent: "flex-end" }}
-              >
-                <IconButton
-                  edge="start"
-                  color="inherit"
-                  aria-label="menu"
-                  onClick={toggleDrawer(true)}
-                  sx={{ mr: 2 }}
-                >
-                  <MenuIcon
-                    sx={{
-                      fontSize: "2rem",
-                      color: pathname === "/" ? "#000" : "#fff",
-                    }}
-                  />
-                </IconButton>
-              </Grid>
-            )}
           </Grid>
         </Toolbar>
       </AppBar>
 
-      {/* Mobile Drawer - Only for xs and sm screens */}
+      {/* Mobile Navigation - Only for xs and sm screens */}
       {isMobile && (
-        <Drawer
-          anchor="right"
-          open={drawerOpen}
-          onClose={toggleDrawer(false)}
+        <AppBar
+          position="fixed"
           sx={{
-            "& .MuiDrawer-paper": {
-              width: 280,
-              boxSizing: "border-box",
-            },
+            top: "auto",
+            bottom: 0,
+            backgroundColor: "#fff",
+            boxShadow: theme.shadows[4],
           }}
         >
-          <Box
-            sx={{ width: 280 }}
-            role="presentation"
-            onClick={toggleDrawer(false)}
-            onKeyDown={toggleDrawer(true)}
-          >
-            <List>
+          <Toolbar>
+            <Stack
+              direction="row"
+              justifyContent="space-around"
+              alignItems="center"
+              sx={{ width: "100%" }}
+            >
               {sections.map(({ path, label, icon, color, children }, index) => (
-                <React.Fragment key={path}>
-                  <ListItem
-                    button
+                <Box
+                  key={path}
+                  onClick={() => setHoveredMenu(hoveredMenu === index ? null : index)}
+                  sx={{ position: "relative", textAlign: "center" }}
+                >
+                  <Avatar
+                    sx={{
+                      mb: 0.5,
+                      p: 0.5,
+                      backgroundColor: color,
+                      boxShadow: pathname === path ? "-1px 1px 15px 1px #fff" : "0px",
+                      width: 36,
+                      height: 36,
+                      margin: "0 auto",
+                    }}
+                    variant="rounded"
                     component={Link}
                     to={path}
-                    onClick={
-                      children
-                        ? (e) => {
-                            e.preventDefault();
-                            handleMenuClick(index);
-                          }
-                        : null
-                    }
                   >
-                    <ListItemIcon>
-                      <Avatar
-                        sx={{
-                          p: 0.5,
-                          backgroundColor: color,
-                          width: 36,
-                          height: 36,
-                        }}
-                        variant="rounded"
-                      >
-                        {icon}
-                      </Avatar>
-                    </ListItemIcon>
-                    <ListItemText primary={label} />
-                    {children &&
-                      (expandedMenu === index ? (
-                        <ExpandLess />
-                      ) : (
-                        <ExpandMore />
-                      ))}
-                  </ListItem>
+                    {icon}
+                  </Avatar>
+                  <Typography variant="caption" sx={{ display: "block", color: "text.primary" }}>
+                    {label}
+                  </Typography>
 
-                  {children && (
-                    <Collapse
-                      in={expandedMenu === index}
-                      timeout="auto"
-                      unmountOnExit
+                  {Array.isArray(children) && hoveredMenu === index && (
+                    <Paper
+                      elevation={3}
+                      sx={{
+                        position: "fixed",
+                        bottom: "60px",
+                        left: 0,
+                        right: 0,
+                        px: 2,
+                        py: 1,
+                        zIndex: 10,
+                        backgroundColor: "transparent",
+                      }}
                     >
-                      <List component="div" disablePadding>
+                      <Stack spacing={1}>
                         {children.map(
-                          ({
-                            path: childPath,
-                            label: childLabel,
-                            icon: childIcon,
-                            color: childColor,
-                          }) => (
-                            <ListItem
+                          ({ path: childPath, label: childLabel, icon: childIcon, color: childColor }) => (
+                            <Stack
                               key={childPath}
-                              button
+                              direction="row"
+                              spacing={1}
+                              alignItems="center"
                               component={Link}
                               to={childPath}
-                              sx={{ pl: 4 }}
+                              sx={{
+                                textDecoration: "none",
+                                color: "black",
+                                px: 1,
+                                py: 0.5,
+                                borderRadius: 1,
+                                "&:hover": {
+                                  backgroundColor: "red",
+                                },
+                              }}
                             >
-                              <ListItemIcon>
-                                <Avatar
-                                  sx={{
-                                    p: 0.5,
-                                    backgroundColor: childColor,
-                                    width: 30,
-                                    height: 30,
-                                  }}
-                                  variant="rounded"
-                                >
-                                  {childIcon}
-                                </Avatar>
-                              </ListItemIcon>
-                              <ListItemText primary={childLabel} />
-                            </ListItem>
+                              <Avatar
+                                sx={{
+                                  width: 24,
+                                  height: 24,
+                                  backgroundColor: childColor,
+                                }}
+                              >
+                                {childIcon}
+                              </Avatar>
+                              <Typography variant="body2">
+                                {childLabel}
+                              </Typography>
+                            </Stack>
                           )
                         )}
-                      </List>
-                    </Collapse>
+                      </Stack>
+                    </Paper>
                   )}
-                  <Divider />
-                </React.Fragment>
+                </Box>
               ))}
-            </List>
-          </Box>
-        </Drawer>
+            </Stack>
+          </Toolbar>
+        </AppBar>
       )}
+
+      {/* Spacer to prevent content from being hidden behind the bottom app bar on mobile */}
+      {isMobile && <Box sx={{ height: '80px' }} />}
     </>
   );
 };
