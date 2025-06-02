@@ -56,7 +56,7 @@ const Aboutus = () => (
     <Container sx={{ py: { xs: 4, sm: 6 } }}>
       {[
         <>
-          <span style={{ color: '#2980B9' }}>Quality Austria Central Asia Pvt Ltd</span> is a joint venture of <span style={{ color: '#2980B9' }}>Quality Austria</span>, Austria, and Peacock Global Quality Assurance, India, established in September 2010. It is one of India’s leading providers of assessment, testing, training, and certification—helping businesses progress and become profitable through continual improvement.
+          <span style={{ color: '#2980B9' }}>Spirale Group</span> is a joint venture of <span style={{ color: '#2980B9' }}>Quality Austria</span>, Austria, and Peacock Global Quality Assurance, India, established in September 2010. It is one of India’s leading providers of assessment, testing, training, and certification—helping businesses progress and become profitable through continual improvement.
         </>,
         <>
           With over 13 years of experience and an unparalleled professional reputation, QACA has successfully audited, inspected, and trained thousands of multinational companies and enterprises—small or big—through the complexities of various standard requirements. Our continual strive to succeed has made us India’s topmost testing, inspection, and certification company.

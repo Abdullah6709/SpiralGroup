@@ -20,6 +20,7 @@ import {
   AccountTree as AccountTreeIcon,
   Home as HomeIcon,
   Business as BusinessIcon,
+  KeyboardArrowUp as KeyboardArrowUpIcon,
 } from "@mui/icons-material";
 import { keyframes } from "@emotion/react";
 import HomeAppBar from "./HomeAppBar";
@@ -39,6 +40,7 @@ const sections = [
   },
   {
     path: "/ittech",
+    icon: <KeyboardArrowUpIcon />,
     label: "Group of\nCompany",
     icon: <AccountTreeIcon sx={{ fontSize: "30px" }} />,
     color: "#b71c1c",
@@ -91,10 +93,11 @@ const slideDown = keyframes`
 const PublicAppBar = () => {
   const { pathname } = useLocation();
   const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down("md")); // xs & sm & md
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("lg")); // xs & sm & md
   const [hoveredMenu, setHoveredMenu] = useState(null);
 
-  const appBarBackgroundColor = pathname === "/" ? "transparent" : "#transparent";
+  const appBarBackgroundColor =
+    pathname === "/" ? "transparent" : "#transparent";
   const appBarPosition = pathname === "/" ? "fixed" : "absolute";
 
   return (
@@ -125,9 +128,24 @@ const PublicAppBar = () => {
             {!isSmallScreen && (
               <Grid item xs={10}>
                 <Stack
-                  sx={{ mt: 2, position: "relative" }}
+                  sx={{
+                    mt: 2,
+                    position: "relative",
+                    // Responsive adjustments
+                    gap: { lg: theme.spacing(7), xl: theme.spacing(7) }, // Default for large screens
+                    mr: { lg: 25, xl: 25 }, // Default for large screens
+                    // Adjustments for 1024px specifically
+                    [theme.breakpoints.between(1024, 1200)]: {
+                      gap: theme.spacing(5), // Smaller gap at 1024px
+                      mr: 15, // Smaller margin at 1024px
+                    },
+                    // Adjustments for screens below 1024px
+                    [theme.breakpoints.down(1024)]: {
+                      gap: theme.spacing(3), // Even smaller gap
+                      mr: 0, // No margin
+                    },
+                  }}
                   direction="row"
-                  gap={theme.spacing(7)}
                   justifyContent="center"
                 >
                   {sections.map(
@@ -170,62 +188,66 @@ const PublicAppBar = () => {
                           </Typography>
                         </Stack>
 
-                        {Array.isArray(children) &&
-                          hoveredMenu === index && (
-                            <Paper
-                              elevation={3}
-                              sx={{
-                                position: "absolute",
-                                top: "100%",
-                                left: "50%",
-                                transform: "translateX(-50%)",
-                                mt: 1,
-                                px: 2,
-                                py: 1,
-                                zIndex: 10,
-                                minWidth: "180px",
-                                backgroundColor: "#fff",
-                              }}
-                            >
-                              <Stack spacing={1}>
-                                {children.map(
-                                  ({ path: childPath, label: childLabel, icon: childIcon, color: childColor }) => (
-                                    <Stack
-                                      key={childPath}
-                                      direction="row"
-                                      spacing={1}
-                                      alignItems="center"
-                                      component={Link}
-                                      to={childPath}
+                        {Array.isArray(children) && hoveredMenu === index && (
+                          <Paper
+                            elevation={3}
+                            sx={{
+                              position: "absolute",
+                              top: "100%",
+                              left: "50%",
+                              transform: "translateX(-50%)",
+                              mt: 1,
+                              px: 2,
+                              py: 1,
+                              zIndex: 10,
+                              minWidth: "180px",
+                              backgroundColor: "#fff",
+                            }}
+                          >
+                            <Stack spacing={1}>
+                              {children.map(
+                                ({
+                                  path: childPath,
+                                  label: childLabel,
+                                  icon: childIcon,
+                                  color: childColor,
+                                }) => (
+                                  <Stack
+                                    key={childPath}
+                                    direction="row"
+                                    spacing={1}
+                                    alignItems="center"
+                                    component={Link}
+                                    to={childPath}
+                                    sx={{
+                                      textDecoration: "none",
+                                      color: "black",
+                                      px: 1,
+                                      py: 0.5,
+                                      borderRadius: 1,
+                                      "&:hover": {
+                                        backgroundColor: "red",
+                                      },
+                                    }}
+                                  >
+                                    <Avatar
                                       sx={{
-                                        textDecoration: "none",
-                                        color: "black",
-                                        px: 1,
-                                        py: 0.5,
-                                        borderRadius: 1,
-                                        "&:hover": {
-                                          backgroundColor: "red",
-                                        },
+                                        width: 24,
+                                        height: 24,
+                                        backgroundColor: childColor,
                                       }}
                                     >
-                                      <Avatar
-                                        sx={{
-                                          width: 24,
-                                          height: 24,
-                                          backgroundColor: childColor,
-                                        }}
-                                      >
-                                        {childIcon}
-                                      </Avatar>
-                                      <Typography variant="body2">
-                                        {childLabel}
-                                      </Typography>
-                                    </Stack>
-                                  )
-                                )}
-                              </Stack>
-                            </Paper>
-                          )}
+                                      {childIcon}
+                                    </Avatar>
+                                    <Typography variant="body2">
+                                      {childLabel}
+                                    </Typography>
+                                  </Stack>
+                                )
+                              )}
+                            </Stack>
+                          </Paper>
+                        )}
                       </Box>
                     )
                   )}
@@ -257,7 +279,9 @@ const PublicAppBar = () => {
               {sections.map(({ path, label, icon, color, children }, index) => (
                 <Box
                   key={path}
-                  onClick={() => setHoveredMenu(hoveredMenu === index ? null : index)}
+                  onClick={() =>
+                    setHoveredMenu(hoveredMenu === index ? null : index)
+                  }
                   sx={{ position: "relative", textAlign: "center" }}
                 >
                   <Avatar
@@ -265,7 +289,8 @@ const PublicAppBar = () => {
                       mb: 0.5,
                       p: 0.5,
                       backgroundColor: color,
-                      boxShadow: pathname === path ? "-1px 1px 15px 1px #fff" : "0px",
+                      boxShadow:
+                        pathname === path ? "-1px 1px 15px 1px #fff" : "0px",
                       width: 36,
                       height: 36,
                       margin: "0 auto",
@@ -276,9 +301,6 @@ const PublicAppBar = () => {
                   >
                     {icon}
                   </Avatar>
-
-                  {/* Label removed on mobile/tablet */}
-                  {/* <Typography variant="caption">{label}</Typography> */}
 
                   {Array.isArray(children) && hoveredMenu === index && (
                     <Paper
@@ -296,7 +318,12 @@ const PublicAppBar = () => {
                     >
                       <Stack spacing={1}>
                         {children.map(
-                          ({ path: childPath, label: childLabel, icon: childIcon, color: childColor }) => (
+                          ({
+                            path: childPath,
+                            label: childLabel,
+                            icon: childIcon,
+                            color: childColor,
+                          }) => (
                             <Stack
                               key={childPath}
                               direction="row"
@@ -341,7 +368,7 @@ const PublicAppBar = () => {
       )}
 
       {/* Spacer to prevent content from being hidden behind the bottom app bar */}
-      {isSmallScreen && <Box sx={{ height: '80px' }} />}
+      {isSmallScreen && <Box sx={{ height: "80px" }} />}
     </>
   );
 };
