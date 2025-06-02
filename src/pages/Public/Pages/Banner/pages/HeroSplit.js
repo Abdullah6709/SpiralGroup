@@ -19,7 +19,7 @@ const HeroSplit = () => {
           </Grid>
           <Grid item xs={12} md={6}>
             <img
-              src="c:\Users\dell\Downloads\pexels-albinberlin-919073.jpg"
+              src="https://codesrevolvewordpress.s3.us-west-2.amazonaws.com/revolveai/2023/02/06094124/ai-in-construction.png"
               alt="Spirle innovation"
               style={{ width: "100%", borderRadius: "8px" }}
             />
