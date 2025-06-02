@@ -91,7 +91,7 @@ const slideDown = keyframes`
 const PublicAppBar = () => {
   const { pathname } = useLocation();
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("lg")); // true for xs and sm
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("md")); // xs & sm & md
   const [hoveredMenu, setHoveredMenu] = useState(null);
 
   const appBarBackgroundColor = pathname === "/" ? "transparent" : "#transparent";
@@ -99,14 +99,13 @@ const PublicAppBar = () => {
 
   return (
     <>
-      {/* Top AppBar - Visible on all screens */}
       <AppBar
         elevation={0}
         position={appBarPosition}
         sx={{
           background: "none",
           top: 0,
-          backgroundColor: "appBarBackgroundColor",
+          backgroundColor: appBarBackgroundColor,
         }}
       >
         <Toolbar sx={{ pl: "0px !important" }}>
@@ -122,16 +121,14 @@ const PublicAppBar = () => {
               <HomeAppBar />
             </Grid>
 
-            {/* Desktop Navigation - Visible on md and up */}
-            {!isMobile && (
+            {/* Desktop Navigation - Only for lg and up */}
+            {!isSmallScreen && (
               <Grid item xs={10}>
                 <Stack
                   sx={{ mt: 2, position: "relative" }}
                   direction="row"
                   gap={theme.spacing(7)}
                   justifyContent="center"
-              
-                  
                 >
                   {sections.map(
                     ({ path, label, icon, color, children }, index) => (
@@ -239,8 +236,8 @@ const PublicAppBar = () => {
         </Toolbar>
       </AppBar>
 
-      {/* Mobile Navigation - Only for xs and sm screens */}
-      {isMobile && (
+      {/* Mobile/Tablet Navigation - Up to md */}
+      {isSmallScreen && (
         <AppBar
           position="fixed"
           sx={{
@@ -279,9 +276,9 @@ const PublicAppBar = () => {
                   >
                     {icon}
                   </Avatar>
-                  <Typography variant="caption" sx={{ display: "block", color: "text.primary" }}>
-                    {label}
-                  </Typography>
+
+                  {/* Label removed on mobile/tablet */}
+                  {/* <Typography variant="caption">{label}</Typography> */}
 
                   {Array.isArray(children) && hoveredMenu === index && (
                     <Paper
@@ -294,7 +291,7 @@ const PublicAppBar = () => {
                         px: 2,
                         py: 1,
                         zIndex: 10,
-                        backgroundColor: "transparent",
+                        backgroundColor: "#fff",
                       }}
                     >
                       <Stack spacing={1}>
@@ -343,8 +340,8 @@ const PublicAppBar = () => {
         </AppBar>
       )}
 
-      {/* Spacer to prevent content from being hidden behind the bottom app bar on mobile */}
-      {isMobile && <Box sx={{ height: '80px' }} />}
+      {/* Spacer to prevent content from being hidden behind the bottom app bar */}
+      {isSmallScreen && <Box sx={{ height: '80px' }} />}
     </>
   );
 };
