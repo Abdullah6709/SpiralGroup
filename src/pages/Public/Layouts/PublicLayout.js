@@ -2,6 +2,7 @@ import React from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 import PublicAppBar from '../../../components/Public/PublicAppBar'
 import Footer from '../../../components/Public/Footer'
+import Subscribe from '../../../components/Public/Subscribe'
 
 function PublicLayout() {
     const location = useLocation();
@@ -13,6 +14,7 @@ function PublicLayout() {
         <div>
             <PublicAppBar />
             <Outlet />
+          {shouldShowFooter && <Subscribe />}  
             {shouldShowFooter && <Footer />}
         </div>
     )
