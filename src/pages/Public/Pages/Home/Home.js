@@ -34,7 +34,7 @@ const Content = styled(Box)(({ theme }) => ({
 
 const LogoImage = styled('img')(({ theme }) => ({
   width: '100%',
-  maxWidth: 350,
+  maxWidth: 400,
   height: 'auto',
   margin: '0 auto',
   [theme.breakpoints.down('sm')]: {
@@ -64,7 +64,7 @@ const Home = () => {
   return (
     <>
       <Content>
-        <Box mt={isMobile ? 15 : 3}>
+        <Box mt={isMobile ? 18 : 3}>
           <LogoImage
             src={Logo}
             alt="Logo"
