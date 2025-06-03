@@ -47,7 +47,7 @@ const ItTech = () => {
             <Overlay />
             <Content>
                 <Box>
-                    <Typography variant='h3'>Information Technology</Typography>
+                    <Typography variant='h3'>Groups of Spirale Group</Typography>
                     <Stack sx={{ my: 2 }} direction="row" spacing={1} justifyContent={'center'}>
                         <Button size='medium'
                             variant='none'
@@ -67,7 +67,7 @@ const ItTech = () => {
                             }}
                             onClick={handleClick}
                         >
-                            EXPLORE Information Technology <EastIcon sx={{ pl: 1 }} />
+                            EXPLORE Spirale Group <EastIcon sx={{ pl: 1 }} />
                         </Button>
                     </Stack>
                 </Box>

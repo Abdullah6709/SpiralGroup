@@ -17,6 +17,8 @@ import ItTechnoPage from '../../pages/Public/Pages/ItTechno/ItTechnoPage/ItTechn
 import ManufactPage from '../../pages/Public/Pages/Manufact/ManufactPage/ManufactPage';
 import HomeExp from '../../pages/Public/Pages/Home/HomeExplore/HomeExp';
 import BlogServicesPage from '../../pages/Public/Pages/blog/BlogServicesPage';
+import Company1 from '../../pages/Public/Pages/Automobile/AutomobilePage/Pages/Company1';
+import Company2 from '../../pages/Public/Pages/Automobile/AutomobilePage/Pages/Company2';
 // import BlogServicesPage from '../../pages/Public/Pages/Telecom/Blog/BlogServicesPage';
 
 const PublicRoutes = () => {
@@ -39,6 +41,9 @@ const PublicRoutes = () => {
                     <Route path='/career' element={<Career />} />
                     <Route path='/contact' element={<Contact />} />
                     <Route path='/blogservicespage' element={<BlogServicesPage />} />
+                      <Route path='/ittech/company2' element={<Company2 />} />
+                         <Route path='/ittech/company1' element={<Company1 />} />
+                  
                 </Route>
 
             </Routes>
